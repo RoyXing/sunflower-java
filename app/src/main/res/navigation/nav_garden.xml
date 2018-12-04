@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_garden"
+    app:startDestination="@id/garden_fragment">
+
+    <fragment
+        android:id="@+id/garden_fragment"
+        android:name="com.xingzy.GardenFragment"
+        android:label="@string/my_garden_title"
+        tools:layout="@layout/fragment_garden">
+        <action
+            android:id="@+id/action_garden_fragment_to_plant_detail_fragment"
+            app:destination="@id/plant_detail_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/plant_detail_fragment"
+        android:name="com.xingzy.PlantDetailFragment"
+        android:label="@string/plant_details_title"
+        tools:layout="@layout/fragment_plant_detail" />
+
+    <fragment
+        android:id="@+id/plant_list_fragment"
+        android:name="com.xingzy.PlantListFragment"
+        android:label="@string/plant_list_title"
+        tools:layout="@layout/fragment_plant_list">
+        <action
+            android:id="@+id/action_plant_list_fragment_to_plant_detail_fragment"
+            app:destination="@id/plant_detail_fragment" />
+    </fragment>
+
+</navigation>
