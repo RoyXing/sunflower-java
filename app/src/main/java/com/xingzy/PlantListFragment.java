@@ -2,12 +2,22 @@ package com.xingzy;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.xingzy.adapters.PlantAdapter;
+import com.xingzy.adapters.PlantDiffCallback;
+import com.xingzy.databinding.FragmentPlantListBinding;
+import com.xingzy.utilities.InjectorUtils;
+import com.xingzy.viewmodels.PlantListViewModel;
+import com.xingzy.viewmodels.PlantListViewModelFactory;
+
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,17 +26,52 @@ import android.view.ViewGroup;
  */
 public class PlantListFragment extends Fragment {
 
-
-    public PlantListFragment() {
-        // Required empty public constructor
-    }
-
+    private PlantListViewModel viewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plant_list, container, false);
+        FragmentPlantListBinding binding = FragmentPlantListBinding.inflate(inflater, container, false);
+        PlantListViewModelFactory factory = InjectorUtils.providePlantListViewModelFactory(requireContext());
+        viewModel = ViewModelProviders.of(this, factory).get(PlantListViewModel.class);
+        PlantAdapter adapter = new PlantAdapter(new PlantDiffCallback());
+        binding.plantList.setAdapter(adapter);
+        subscribeUi(adapter);
+        setHasOptionsMenu(true);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_plant_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.filter_zone: {
+                updateData();
+                return true;
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void updateData() {
+        if (viewModel.isFiltered()) {
+            viewModel.clearGrowZoneNumber();
+        } else {
+            viewModel.setGrowZoneNumber(9);
+        }
+    }
+
+    private void subscribeUi(PlantAdapter adapter) {
+        viewModel.plantList().observe(getViewLifecycleOwner(), plants -> {
+            if (plants != null) {
+                adapter.submitList(plants);
+            }
+        });
     }
 
 }

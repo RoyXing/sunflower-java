@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.xingzy.databinding.GardenActivityBinding;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
@@ -35,6 +36,7 @@ public class GardenActivity extends AppCompatActivity {
 
         //绑定头部信息
         setSupportActionBar(binding.toolbar);
+        ActionBar supportActionBar = getSupportActionBar();
         setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         //绑定侧滑menu的点击事件

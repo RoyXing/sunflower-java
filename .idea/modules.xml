@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sunflowerjava.iml" filepath="$PROJECT_DIR$/sunflowerjava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sunflower-java.iml" filepath="$PROJECT_DIR$/sunflower-java.iml" />
     </modules>
   </component>
 </project>
